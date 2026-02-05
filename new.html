@@ -1,88 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abhinav Sujit Pawar | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhinav Sujit Pawar | Portfolio</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --border-color: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 1. DYNAMIC MOVING BACKGROUND */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            animation: moveBg 15s ease infinite alternate;
+        }
+
+        @keyframes moveBg {
+            from { transform: scale(1); }
+            to { transform: scale(1.2) translate(2%, 2%); }
+        }
+
+        /* Navigation */
+        header {
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            max-width: 1100px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            margin-left: 1.5rem; font-size: 0.9rem; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-color); }
+
+        /* Hero Section */
+        #home {
+            padding: 160px 2rem 80px; text-align: center;
+            max-width: 800px; margin: 0 auto;
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        .subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500; }
+        .about-text { color: var(--text-secondary); font-size: 1.1rem; }
+
+        /* Sections */
+        section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
+        h2 { 
+            font-size: 2rem; margin-bottom: 2rem; display: flex;
+            align-items: center; gap: 10px;
+        }
+        h2::after { content: ""; height: 1px; background: var(--border-color); flex-grow: 1; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2rem; border-radius: 12px;
+            margin-bottom: 1.5rem; backdrop-filter: blur(5px);
+            transition: transform 0.3s, border-color 0.3s, background 0.3s;
+            opacity: 0; transform: translateY(30px); /* For Scroll Animation */
+        }
+        .card:hover { 
+            transform: translateY(-5px) !important; 
+            border-color: var(--accent-color);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .card h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        .card h4 { font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; display: block; }
+        
+        ul { list-style-position: inside; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+
+        /* Skills */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            padding: 5px 15px; border-radius: 20px;
+            font-size: 0.85rem; border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 2rem; border-top: 1px solid var(--border-color);
+            text-align: center; color: var(--text-secondary); font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>Abhinav Sujit Pawar</h1>
-    <p>Computer Science Student | Developer</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <!-- About -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. I enjoy building efficient, user-friendly applications and solving real-world problems.</p>
-  </section>
+    <div class="bg-animate"></div>
 
-  <!-- Education -->
-  <section id="education">
-    <h2>Education</h2>
-    <ul>
-      <li><strong>Bachelor of Computer Science</strong>, Dr. D. Y. Patil Technical Campus (CGPA: 7.68/10, Expected 2027)</li>
-      <li><strong>Diploma in Computer Engineering</strong>, Sanjivani K.B.P. Polytechnic (80.51%)</li>
-    </ul>
-  </section>
+    <header>
+        <nav>
+            <div class="logo">ASP.</div>
+            <div class="nav-links">
+                <a href="#home">About</a>
+                <a href="#leadership">Leadership</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#certifications">Certifications</a>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Experience -->
-  <section id="experience">
-    <h2>Experience</h2>
-    <h3>Arnav Technosys – Android Development Intern</h3>
-    <p>Developed Android apps using Java & XML, optimized performance, and collaborated with senior developers.</p>
-    <h3>Cognifyz Technologies – Java Development Intern</h3>
-    <p>Worked on backend logic with Core Java, modular code structures, and real-world problem-solving.</p>
-  </section>
+    <section id="home">
+        <h1 class="reveal">Abhinav Sujit Pawar</h1>
+        <p class="subtitle reveal">Founder & President @ DSC | CS Student | Developer</p>
+        <p class="about-text reveal">
+            I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. 
+            As the founder of the Developer Student Club on my campus, I lead a team focused on bridging the gap between theory and practice.
+        </p>
+    </section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <h2>Projects</h2>
-    <h3>Real-Time Chat Dashboard</h3>
-    <p>Spring Boot, JS, MySQL – Responsive messaging app with modern UI and secure authentication.</p>
-    <h3>Mentor Meeting System</h3>
-    <p>Android Java, XML, PHP, Firebase – Streamlined mentorship management with hierarchical roles.</p>
-  </section>
+    <section id="leadership">
+        <h2>Leadership & Impact</h2>
+        <div class="card">
+            <h3>Founder & President</h3>
+            <h4>Developer Student Club (DSC) - DYPTC Campus</h4>
+            <span class="date">Present</span>
+            <ul>
+                <li>Established the club to foster a culture of technical innovation and collaborative learning.</li>
+                <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit at the college level.</li>
+                <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
+            </ul>
+        </div>
+    </section>
 
-  <!-- Skills -->
-  <section id="skills">
-    <h2>Technical Skills</h2>
-    <p>Java, C, C++, Python, HTML5, CSS3, JavaScript, MySQL, Firebase, Spring Boot, Android Studio, Git, Linux</p>
-  </section>
+    <section id="education">
+        <h2>Education</h2>
+        <div class="card">
+            <h3>Bachelor of Computer Science</h3>
+            <h4>Dr. D. Y. Patil Technical Campus (Pune University)</h4>
+            <span class="date">Expected Graduation: 2027</span>
+            <p>CGPA: 7.68 / 10.0</p>
+        </div>
+        <div class="card">
+            <h3>Diploma in Computer Engineering</h3>
+            <h4>Sanjivani K.B.P. Polytechnic</h4>
+            <span class="date">Kopargaon, MH | Completed</span>
+            <p>Percentage: 80.51%</p>
+        </div>
+    </section>
 
-  <!-- Certifications -->
-  <section id="certifications">
-    <h2>Certifications & Achievements</h2>
-    <ul>
-      <li>HTML, CSS, JS – Johns Hopkins University (Coursera)</li>
-      <li>Core Java – Anudip Foundation (A+)</li>
-      <li>Advance Java – Anudip Foundation</li>
-      <li>1st Rank – College Hackathon (C++)</li>
-      <li>Participant – Tech-Mantra 2k24 Hackathon</li>
-    </ul>
-  </section>
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="card">
+            <h3>Android Development Intern</h3>
+            <h4>Arnav Technosys</h4>
+            <span class="date">6 Weeks | Pune, MH</span>
+            <ul>
+                <li>Developed Android applications using Java and XML, implementing responsive UI designs.</li>
+                <li>Collaborated with developers to troubleshoot bugs and optimize app performance.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Java Development Intern</h3>
+            <h4>Cognifyz Technologies</h4>
+            <span class="date">1 Month | Remote / On-site</span>
+            <ul>
+                <li>Worked on backend logic utilizing Core Java concepts and OOP principles.</li>
+                <li>Assisted in development of modular code structures and participated in code reviews.</li>
+            </ul>
+        </div>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:abhinavspawar2005@gmail.com">abhinavspawar2005@gmail.com</a></p>
-    <p>Phone: +91-9359717085</p>
-    <p><a href="https://linkedin.com">LinkedIn</a> | <a href="https://github.com">GitHub</a></p>
-  </section>
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="card">
+            <h3>Real-Time Chat Dashboard (Ocean Glass Theme)</h3>
+            <h4>Java, Spring Boot, JS, MySQL</h4>
+            <ul>
+                <li>Developed a responsive messaging application with glassmorphism and animations.</li>
+                <li>Implemented secure authentication, global contact search, and friend management.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Mentor Meeting System</h3>
+            <h4>Android Java, XML, PHP, Firebase</h4>
+            <ul>
+                <li>Engineered an Android application to streamline student tracking and mentorship management.</li>
+                <li>Utilized XML for UI and Android Java for core logic, integrating a PHP backend.</li>
+            </ul>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2026 Abhinav Sujit Pawar</p>
-  </footer>
+    <section id="certifications">
+        <h2>Certifications & Achievements</h2>
+        <div class="card">
+            <ul>
+                <li><strong>1st Rank, College Level Hackathon</strong>: C++ Programming competition.</li>
+                <li><strong>Participant, Tech-Mantra 2k24</strong>: District Level Hackathon.</li>
+                <li><strong>HTML, CSS, and Javascript</strong>: Johns Hopkins University (82.60%).</li>
+                <li><strong>Core Java Course</strong>: Anudip Foundation (Grade: A+).</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">Android Studio</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">Firebase</span>
+            <span class="skill-tag">Git/GitHub</span>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>Email: abhinavspawar2005@gmail.com</p>
+        <p>Phone: +91-9359717085</p>
+        <div style="margin-top: 20px;">
+            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">LinkedIn</a>
+            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">GitHub</a>
+        </div>
+        <p style="margin-top: 30px; color: #475569;">© 2026 Abhinav Sujit Pawar</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header and Hero entrance
+        gsap.from(".logo", { opacity: 0, x: -20, duration: 1 });
+        gsap.from(".nav-links a", { opacity: 0, y: -10, stagger: 0.1, duration: 1 });
+        gsap.from(".reveal", { opacity: 0, y: 30, stagger: 0.2, duration: 1 });
+
+        // Scroll Reveal for Cards
+        gsap.utils.toArray(".card").forEach(card => {
+            gsap.to(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+    </script>
 </body>
 </html>
