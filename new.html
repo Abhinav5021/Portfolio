@@ -11,14 +11,14 @@
     <style>
         :root {
             --bg-color: #050811;
-            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-bg: #111827;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --accent-color: #38bdf8;
             --border-color: #334155;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; } /* Cursor none to use custom one */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: var(--bg-color); 
@@ -27,24 +27,12 @@
             overflow-x: hidden;
         }
 
-        /* 1. CUSTOM CURSOR */
-        #custom-cursor {
-            width: 20px; height: 20px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease-out;
-        }
-
-        /* 2. MOUSE GLOW EFFECT */
-        .mouse-glow {
+        /* 1. SPOTLIGHT EFFECT (Standard Cursor Kept) */
+        .spotlight {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(56, 189, 248, 0.08), transparent 40%);
+            background: radial-gradient(400px circle at var(--x) var(--y), rgba(56, 189, 248, 0.1), transparent 80%);
             z-index: -1;
             pointer-events: none;
         }
@@ -63,53 +51,88 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); letter-spacing: 1px; }
+        .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
         .nav-links a {
             color: var(--text-secondary); text-decoration: none;
             margin-left: 1.5rem; font-size: 0.9rem; transition: color 0.3s;
         }
+        .nav-links a:hover { color: var(--accent-color); }
 
         /* Hero Section */
         #home { padding: 180px 2rem 100px; text-align: center; max-width: 900px; margin: 0 auto; }
-        h1 { font-size: 4rem; margin-bottom: 1rem; letter-spacing: -2px; font-weight: 900; }
-        .subtitle { font-size: 1.3rem; color: var(--accent-color); margin-bottom: 2rem; }
+        h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        .subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500; }
 
-        /* Sections & Cards */
+        /* Sections */
         section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
         h2 { font-size: 2rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
         h2::after { content: ""; height: 1px; background: var(--border-color); flex-grow: 1; }
 
+        /* 2. GLOWING MOVING BORDER & ZOOM CARD */
+        .card-wrapper {
+            position: relative;
+            padding: 2px; /* Space for the border */
+            border-radius: 22px;
+            margin-bottom: 2rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: transparent;
+            overflow: hidden;
+            opacity: 0; transform: translateY(30px);
+        }
+
+        .card-wrapper:hover {
+            transform: scale(1.03); /* Zoom Effect */
+        }
+
+        /* The Moving Border Animation */
+        .card-wrapper:hover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(transparent, var(--accent-color), transparent 30%);
+            animation: rotateBorder 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 2.5rem; border-radius: 20px;
-            margin-bottom: 2rem; backdrop-filter: blur(8px);
-            transition: border-color 0.4s, background 0.4s;
-            opacity: 0; transform: translateY(40px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            height: 100%;
+            width: 100%;
         }
-        
-        /* Skills Tags */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 12px; }
+
+        .card h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        .date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; display: block; }
+        ul { list-style-position: inside; color: var(--text-secondary); margin-top: 10px; }
+        li { margin-bottom: 0.8rem; }
+
+        /* Skills */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
         .skill-tag {
-            background: rgba(56, 189, 248, 0.05);
+            background: rgba(56, 189, 248, 0.1);
             color: var(--accent-color);
-            padding: 8px 18px; border-radius: 30px;
+            padding: 6px 16px; border-radius: 30px;
             font-size: 0.85rem; border: 1px solid rgba(56, 189, 248, 0.2);
         }
 
         footer { padding: 60px 2rem; text-align: center; border-top: 1px solid var(--border-color); }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            #custom-cursor { display: none; }
-            * { cursor: auto; }
+            h1 { font-size: 2.5rem; }
+            .card-wrapper:hover { transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
-    <div class="mouse-glow" id="glow"></div>
+    <div class="spotlight" id="spotlight"></div>
 
     <header>
         <nav>
@@ -120,6 +143,7 @@
                 <a href="#education">Education</a>
                 <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
+                <a href="#certifications">Certifications</a>
             </div>
         </nav>
     </header>
@@ -127,112 +151,144 @@
     <section id="home">
         <h1 class="reveal">Abhinav Sujit Pawar</h1>
         <p class="subtitle reveal">Founder & President @ DSC | CS Student | Developer</p>
-        <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto;" class="reveal">
-            Computer Science student at Dr. D. Y. Patil Technical Campus, bridging the gap between theory and industry through community leadership.
+        <p class="text-secondary reveal" style="max-width: 750px; margin: 0 auto; color: var(--text-secondary);">
+            I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. I enjoy building efficient, user-friendly applications and solving real-world problems.
         </p>
     </section>
 
     <section id="leadership">
         <h2>Leadership & Impact</h2>
-        <div class="card">
-            <h3 style="color: var(--accent-color);">Founder & President</h3>
-            <h4>Developer Student Club (DSC) - DYPTC Campus</h4>
-            <ul style="margin-top: 1rem; color: var(--text-secondary); list-style: none;">
-                <li>• Organized the MIC–AICTE IndiaAI Impact Summit.</li>
-                <li>• Built the official DSC Institutional Platform (React + Spring Boot).</li>
-            </ul>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Founder & President</h3>
+                <h4>Developer Student Club (DSC) - DYPTC Campus</h4>
+                <span class="date">Present</span>
+                <ul>
+                    <li>Established the club to foster a culture of technical innovation and collaborative learning among students.</li>
+                    <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the college level.</li>
+                    <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
+                    <li>Currently manage a dedicated team of student developers to build impactful campus solutions.</li>
+                </ul>
+            </div>
         </div>
     </section>
 
     <section id="education">
         <h2>Education</h2>
-        <div class="card">
-            <h3 style="color: var(--accent-color);">BE Computer Science</h3>
-            <p>Dr. D. Y. Patil Technical Campus | 7.68 CGPA</p>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Bachelor of Computer Science</h3>
+                <h4>Dr. D. Y. Patil Technical Campus (Pune University)</h4>
+                <span class="date">Expected Graduation: 2027</span>
+                <p>CGPA: 7.68 / 10.0</p>
+            </div>
         </div>
-        <div class="card">
-            <h3 style="color: var(--accent-color);">Diploma Computer Engineering</h3>
-            <p>Sanjivani K.B.P. Polytechnic | 80.51%</p>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Diploma in Computer Engineering</h3>
+                <h4>Sanjivani K.B.P. Polytechnic</h4>
+                <span class="date">Kopargaon, MH | Completed</span>
+                <p>Percentage: 80.51%</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Android Development Intern</h3>
+                <h4>Arnav Technosys</h4>
+                <span class="date">6 Weeks | Pune, MH</span>
+                <ul>
+                    <li>Developed Android applications using Java and XML, implementing responsive UI designs and core functionality.</li>
+                    <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and ensure code quality.</li>
+                    <li>Gained practical experience in the mobile development lifecycle and version control integration.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Java Development Intern</h3>
+                <h4>Cognifyz Technologies</h4>
+                <span class="date">1 Month | Remote / On-site</span>
+                <ul>
+                    <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming principles.</li>
+                    <li>Assisted in the development of modular code structures and participated in code reviews.</li>
+                    <li>Enhanced problem-solving skills by addressing real-world software development challenges.</li>
+                </ul>
+            </div>
         </div>
     </section>
 
     <section id="projects">
         <h2>Projects</h2>
-        <div class="card">
-            <h3>Ocean Glass Chat Dashboard</h3>
-            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Java, Spring Boot, JS. Modern real-time messaging with glassmorphism UI.</p>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Real-Time Chat Dashboard (Ocean Glass Theme)</h3>
+                <h4>Java, Spring Boot, JS, MySQL</h4>
+                <ul>
+                    <li>Developed a responsive, real-time messaging application using Spring Boot for the backend and Vanilla JavaScript.</li>
+                    <li>Designed a modern "Ocean Glass" user interface with HTML5 and CSS3, featuring glassmorphism and animations.</li>
+                    <li>Implemented secure user authentication, global contact search, and friend management features.</li>
+                    <li>Built profile management tools allowing users to edit details and delete conversation history.</li>
+                </ul>
+            </div>
         </div>
-        <div class="card">
-            <h3>Mentor Meeting System</h3>
-            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Android Java, Firebase. Platform for academic tracking and scheduling.</p>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Mentor Meeting System</h3>
+                <h4>Android Java, XML, PHP, Firebase</h4>
+                <ul>
+                    <li>Engineered an Android application to streamline student tracking and mentorship management for the college.</li>
+                    <li>Utilized XML for UI design and Android Java for core logic, integrating a PHP backend.</li>
+                    <li>Implemented a hierarchical role system (Admin/HOD/Principal) to track records department-wise.</li>
+                    <li>Enabled features for scheduling weekly meetings and tracking student progress using MySQL and SQLite.</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <section id="skills">
-        <h2>Technical Skills</h2>
-        <div class="skills-container">
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">Spring Boot</span>
-            <span class="skill-tag">Android Studio</span>
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">MySQL</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">Linux</span>
+    <section id="certifications">
+        <h2>Certifications & Achievements</h2>
+        <div class="card-wrapper">
+            <div class="card">
+                <ul>
+                    <li><strong>HTML, CSS, and Javascript for Web Developers</strong> - Johns Hopkins University (82.60%)</li>
+                    <li><strong>Core Java Course</strong> - Anudip Foundation (Grade: A+)</li>
+                    <li><strong>Advance Java Course</strong> - Anudip Foundation</li>
+                    <li><strong>1st Rank, College Level Hackathon</strong> - C++ Programming Competition</li>
+                    <li><strong>Participant, Tech-Mantra 2k24</strong> - District Level Hackathon</li>
+                </ul>
+            </div>
         </div>
     </section>
 
     <footer id="contact">
         <p>Email: abhinavspawar2005@gmail.com</p>
+        <p>Phone: +91-9359717085</p>
         <div style="margin-top: 20px;">
-            <a href="#" style="color: var(--accent-color);">LinkedIn</a> | 
-            <a href="#" style="color: var(--accent-color);">GitHub</a>
+            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">LinkedIn</a>
+            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">GitHub</a>
         </div>
         <p style="margin-top: 20px; color: #475569; font-size: 0.8rem;">© 2026 Abhinav Sujit Pawar</p>
     </footer>
 
     <script>
-        // 1. MOUSE TRACKING JS
-        const cursor = document.getElementById('custom-cursor');
-        const glow = document.getElementById('glow');
-        const links = document.querySelectorAll('a, .card');
-
+        // SPOTLIGHT LOGIC
+        const spotlight = document.getElementById('spotlight');
         document.addEventListener('mousemove', (e) => {
-            // Move Cursor
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            // Move Background Glow
-            glow.style.setProperty('--x', e.clientX + 'px');
-            glow.style.setProperty('--y', e.clientY + 'px');
+            spotlight.style.setProperty('--x', e.clientX + 'px');
+            spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // 2. CURSOR HOVER EFFECTS
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2.5)';
-                cursor.style.backgroundColor = 'rgba(56, 189, 248, 0.3)';
-            });
-            link.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.backgroundColor = '#38bdf8';
-            });
-        });
-
-        // 3. GSAP SCROLL REVEAL
+        // SCROLL REVEAL
         gsap.registerPlugin(ScrollTrigger);
-
         gsap.from(".reveal", { opacity: 0, y: 30, stagger: 0.2, duration: 1 });
-
-        gsap.utils.toArray(".card").forEach(card => {
+        gsap.utils.toArray(".card-wrapper").forEach(card => {
             gsap.to(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 90%",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out"
+                scrollTrigger: { trigger: card, start: "top 90%" },
+                opacity: 1, y: 0, duration: 0.8, ease: "power2.out"
             });
         });
     </script>
