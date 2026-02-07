@@ -50,10 +50,11 @@
         }
 
         .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
+        .nav-links { display: flex; align-items: center; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: var(--accent-color); }
 
-        .download-btn { background: var(--accent-color); color: #050811 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; margin-left: 1.5rem; }
+        .download-btn { background: var(--accent-color); color: #050811 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; margin-left: 1.5rem; text-decoration: none; }
 
         /* HERO - PERFECTLY CENTERED */
         #home { 
@@ -63,7 +64,7 @@
             margin: 0 auto;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        h1 { font-size: 4rem; margin-bottom: 1rem; letter-spacing: -1px; font-weight: 900; }
+        h1 { font-size: 4rem; margin-bottom: 1rem; letter-spacing: -1px; font-weight: 900; width: 100%; }
         .subtitle { font-size: 1.3rem; color: var(--accent-color); margin-bottom: 1.5rem; }
 
         /* THE REVEAL CARD SYSTEM */
@@ -99,28 +100,20 @@
         .reveal-content {
             max-height: 0;
             opacity: 0;
-            filter: blur(10px);
             transform: translateY(20px);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
+            overflow: hidden;
         }
 
         /* HOVER ANIMATIONS */
-        .card-wrapper:hover {
-            transform: scale(1.03);
-        }
-
+        .card-wrapper:hover { transform: scale(1.02); }
         .card-wrapper:hover .reveal-content {
-            max-height: 1000px; /* Large enough to fit content */
+            max-height: 1200px; 
             opacity: 1;
-            filter: blur(0);
             transform: translateY(0);
             pointer-events: auto;
             margin-top: 20px;
-        }
-
-        .card-wrapper:hover h3 {
-            transform: translateY(-5px);
         }
 
         /* GLOWING BORDER */
@@ -135,10 +128,11 @@
 
         ul { list-style: none; color: var(--text-secondary); }
         li { margin-bottom: 0.8rem; padding-left: 1.2rem; position: relative; }
-        li::before { content: "→"; position: absolute; left: 0; color: var(--accent-color); }
+        li::before { content: "•"; position: absolute; left: 0; color: var(--accent-color); }
 
         /* SKILLS */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .skill-category h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;}
         .tag { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); color: var(--text-primary); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; margin: 3px; display: inline-block; }
 
         footer { padding: 60px 2rem; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
@@ -153,6 +147,7 @@
             <div class="logo">Abhinav Pawar</div>
             <div class="nav-links">
                 <a href="#leadership">Leadership</a>
+                <a href="#education">Education</a>
                 <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
                 <a href="#skills">Skills</a>
@@ -164,8 +159,8 @@
     <section id="home">
         <h1>Abhinav Sujit Pawar</h1>
         <p class="subtitle">Founder & President @ DSC | CS Student | Developer</p>
-        <p style="max-width: 700px; color: var(--text-secondary);">
-            Computer Science student at Dr. D. Y. Patil Technical Campus. Specialized in Java ecosystems and leadership.
+        <p style="max-width: 750px; color: var(--text-secondary);">
+            Computer Science student at Dr. D. Y. Patil Technical Campus. Passionate about Android and Java development, leading campus technical initiatives.
         </p>
     </section>
 
@@ -173,14 +168,14 @@
         <h2>Leadership</h2>
         <div class="card-wrapper">
             <div class="card">
-                <h3>President @ Developer Student Club</h3>
+                <h3>Founder & President @ DSC</h3>
                 <div class="reveal-content">
-                    <p style="color: var(--accent-color); margin-bottom: 10px;">DYPTC Campus - Pune</p>
+                    <p style="color: var(--accent-color); margin-bottom: 10px;">Developer Student Club - DYPTC Pune</p>
                     <ul>
-                        <li>Established the club to foster a culture of technical innovation.</li>
-                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit.</li>
-                        <li>Led development of official DSC Institutional Platform (React/Spring Boot).</li>
-                        <li>Manage a dedicated team to build impactful campus solutions.</li>
+                        <li>Established the club to foster a culture of technical innovation and collaborative learning among students.</li>
+                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the college level.</li>
+                        <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
+                        <li>Currently manage a dedicated team of student developers to build impactful campus solutions.</li>
                     </ul>
                 </div>
             </div>
@@ -194,7 +189,10 @@
                 <h3>Bachelor of Computer Science</h3>
                 <div class="reveal-content">
                     <p>Dr. D. Y. Patil Technical Campus (Pune University)</p>
-                    <p><strong>CGPA: 7.68 / 10.0</strong> | Expected 2027</p>
+                    <ul>
+                        <li><strong>CGPA: 7.68 / 10.0</strong></li>
+                        <li>Expected Graduation: 2027</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -202,8 +200,11 @@
             <div class="card">
                 <h3>Diploma in Computer Engineering</h3>
                 <div class="reveal-content">
-                    <p>Sanjivani K.B.P. Polytechnic</p>
-                    <p><strong>Percentage: 80.51%</strong> | Completed in Kopargaon</p>
+                    <p>Sanjivani K.B.P. Polytechnic, Kopargaon</p>
+                    <ul>
+                        <li><strong>Percentage: 80.51%</strong></li>
+                        <li>Status: Completed</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -215,11 +216,24 @@
             <div class="card">
                 <h3>Android Development Intern</h3>
                 <div class="reveal-content">
-                    <p style="color: var(--accent-color);">Arnav Technosys | 6 Weeks</p>
+                    <p style="color: var(--accent-color);">Arnav Technosys | 6 Weeks | Pune, MH</p>
                     <ul>
-                        <li>Developed Android apps using Java & XML with responsive UI.</li>
-                        <li>Optimized app performance and ensured code quality.</li>
-                        <li>Gained experience in mobile lifecycle and version control.</li>
+                        <li>Developed Android applications using Java and XML, implementing responsive UI designs and core functionality.</li>
+                        <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and ensure code quality.</li>
+                        <li>Gained practical experience in the mobile development lifecycle and version control integration.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Java Development Intern</h3>
+                <div class="reveal-content">
+                    <p style="color: var(--accent-color);">Cognifyz Technologies | 1 Month</p>
+                    <ul>
+                        <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming principles.</li>
+                        <li>Assisted in the development of modular code structures and participated in code reviews.</li>
+                        <li>Enhanced problem-solving skills by addressing real-world software development challenges.</li>
                     </ul>
                 </div>
             </div>
@@ -232,11 +246,26 @@
             <div class="card">
                 <h3>Real-Time Chat Dashboard</h3>
                 <div class="reveal-content">
-                    <p><strong>Java, Spring Boot, JS, MySQL</strong></p>
+                    <p style="margin-bottom: 10px;"><strong>Java, Spring Boot, JS, MySQL</strong></p>
                     <ul>
-                        <li>Responsive messaging app with "Ocean Glass" UI theme.</li>
-                        <li>Secure authentication and global friend management.</li>
-                        <li>Profile tools for detail editing and history deletion.</li>
+                        <li>Developed a responsive messaging application using Spring Boot for the backend and Vanilla JavaScript.</li>
+                        <li>Designed a modern "Ocean Glass" UI with HTML5/CSS3 featuring glassmorphism and animations.</li>
+                        <li>Implemented secure user authentication, global contact search, and friend management features.</li>
+                        <li>Built profile management tools allowing users to edit details and delete conversation history.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Mentor Meeting System</h3>
+                <div class="reveal-content">
+                    <p style="margin-bottom: 10px;"><strong>Android Java, XML, PHP, Firebase</strong></p>
+                    <ul>
+                        <li>Engineered an Android application to streamline student tracking and mentorship management for the college.</li>
+                        <li>Utilized XML for UI design and Android Java for core logic, integrating a PHP backend.</li>
+                        <li>Implemented a hierarchical role system (Admin/HOD/Principal) to track records department-wise.</li>
+                        <li>Enabled features for scheduling weekly meetings and tracking student progress using MySQL and SQLite.</li>
                     </ul>
                 </div>
             </div>
@@ -247,16 +276,20 @@
         <h2>Technical Skills</h2>
         <div class="card-wrapper">
             <div class="card">
-                <h3>Tech Stack & Tools</h3>
+                <h3>View Tech Stack</h3>
                 <div class="reveal-content">
                     <div class="skills-grid">
-                        <div>
-                            <h4 style="color:var(--accent-color); font-size: 0.9rem;">Languages</h4>
-                            <span class="tag">Java</span><span class="tag">C++</span><span class="tag">Python</span>
+                        <div class="skill-category">
+                            <h4>Languages</h4>
+                            <span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Advanced Java</span>
                         </div>
-                        <div>
-                            <h4 style="color:var(--accent-color); font-size: 0.9rem;">Web/Mobile</h4>
-                            <span class="tag">Spring Boot</span><span class="tag">Android Studio</span><span class="tag">React</span>
+                        <div class="skill-category">
+                            <h4>Web & Mobile</h4>
+                            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JS</span><span class="tag">Spring Boot</span><span class="tag">Android Studio</span>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Tools</h4>
+                            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">VS Code</span>
                         </div>
                     </div>
                 </div>
@@ -264,8 +297,26 @@
         </div>
     </section>
 
+    <section id="certifications">
+        <h2>Certifications</h2>
+        <div class="card-wrapper">
+            <div class="card">
+                <h3>Achievements & Ranks</h3>
+                <div class="reveal-content">
+                    <ul>
+                        <li><strong>Johns Hopkins University:</strong> Web Development (82.60%)</li>
+                        <li><strong>Anudip Foundation:</strong> Core Java Course (Grade: A+)</li>
+                        <li><strong>1st Rank:</strong> College Level C++ Programming Hackathon</li>
+                        <li><strong>Tech-Mantra 2k24:</strong> District Level Hackathon Participant</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>abhinavspawar2005@gmail.com | © 2026 Abhinav Sujit Pawar</p>
+        <p>abhinavspawar2005@gmail.com | +91-9359717085</p>
+        <p>© 2026 Abhinav Sujit Pawar</p>
     </footer>
 
     <script>
