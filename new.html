@@ -47,130 +47,120 @@
         }
 
         nav {
-            max-width: 1100px; margin: 0 auto; padding: 1.2rem 2rem;
+            max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem;
             display: flex; justify-content: space-between; align-items: center;
         }
 
         .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; }
         .nav-links a {
             color: var(--text-secondary); text-decoration: none;
-            margin-left: 1.5rem; font-size: 0.9rem; transition: color 0.3s;
+            font-size: 0.9rem; transition: color 0.3s;
+            cursor: pointer;
         }
         .nav-links a:hover { color: var(--accent-color); }
 
-        /* Hero */
-        #home { padding: 180px 2rem 100px; text-align: center; max-width: 900px; margin: 0 auto; }
-        h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
-        .subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500; }
+        /* DOWNLOAD BUTTON STYLE */
+        .download-btn {
+            background: var(--accent-color);
+            color: #050811 !important;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700 !important;
+            transition: transform 0.2s, background 0.3s !important;
+        }
+        .download-btn:hover {
+            transform: scale(1.05);
+            background: #7dd3fc !important;
+        }
 
-        /* Sections */
+        /* CONTACT MODAL */
+        #contact-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 8, 17, 0.95); z-index: 2000; justify-content: center; align-items: center;
+            backdrop-filter: blur(15px);
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 3rem; border-radius: 24px;
+            width: 90%; max-width: 500px; border: 1px solid var(--border-color); position: relative;
+        }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--accent-color); font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color); border-radius: 8px; color: white; outline: none;
+        }
+        .send-btn { width: 100%; padding: 12px; background: var(--accent-color); border: none; border-radius: 8px; color: #050811; font-weight: 700; cursor: pointer; }
+
+        /* SECTIONS & ZOOM CARDS */
         section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
         h2 { font-size: 2rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
         h2::after { content: ""; height: 1px; background: var(--border-color); flex-grow: 1; }
 
-        /* ZOOM & GLOW BORDER SYSTEM */
         .card-wrapper {
-            position: relative;
-            padding: 2px;
-            border-radius: 22px;
-            margin-bottom: 2rem;
+            position: relative; padding: 2px; border-radius: 22px; margin-bottom: 2rem;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            display: block;
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.05); overflow: hidden; z-index: 1;
         }
-
-        .card-wrapper:hover {
-            transform: scale(1.04); /* Fixed Zoom */
-            z-index: 10;
-        }
-
-        /* Animated Border */
+        .card-wrapper:hover { transform: scale(1.04); z-index: 10; }
         .card-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: conic-gradient(transparent, transparent, transparent, var(--accent-color));
-            animation: rotateBorder 4s linear infinite;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s;
+            animation: rotateBorder 4s linear infinite; z-index: -1; opacity: 0; transition: opacity 0.3s;
         }
+        .card-wrapper:hover::before { opacity: 1; }
+        @keyframes rotateBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .card-wrapper:hover::before {
-            opacity: 1; /* Glow Border appears only on hover */
-        }
-
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-            height: 100%;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
-
+        .card { background: var(--card-bg); padding: 2.5rem; border-radius: 20px; height: 100%; width: 100%; position: relative; z-index: 2; }
         .card h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
         .date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; display: block; }
-        ul { list-style-position: inside; color: var(--text-secondary); margin-top: 10px; }
+        ul { list-style-position: inside; color: var(--text-secondary); }
         li { margin-bottom: 0.8rem; }
 
-        /* SKILLS GRID */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .skill-category h4 { color: var(--accent-color); margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            color: var(--text-primary);
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-        }
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .skill-category h4 { color: var(--accent-color); margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; }
+        .tag { background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); color: var(--text-primary); padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; margin-right: 5px; }
 
         footer { padding: 60px 2rem; text-align: center; border-top: 1px solid var(--border-color); }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .card-wrapper:hover { transform: none; }
-        }
     </style>
 </head>
 <body>
 
     <div class="spotlight" id="spotlight"></div>
 
+    <div id="contact-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 style="border:none; margin-bottom:1.5rem;">Send a Message</h2>
+            <form id="contact-form">
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Subject</label><input type="text" required></div>
+                <div class="form-group"><label>Message</label><textarea rows="4" required></textarea></div>
+                <button type="submit" class="send-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+
     <header>
         <nav>
             <div class="logo">Abhinav Pawar</div>
             <div class="nav-links">
-                <a href="#about">About</a>
                 <a href="#leadership">Leadership</a>
-                <a href="#education">Education</a>
-                <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
                 <a href="#skills">Skills</a>
+                <a id="openModal">Contact</a>
+                <a href="AbhinavCV.pdf" download class="download-btn">DOWNLOAD CV</a>
             </div>
         </nav>
     </header>
 
     <section id="home">
-        <h1 class="reveal">Abhinav Sujit Pawar</h1>
+        [cite_start]<h1 class="reveal">Abhinav Sujit Pawar [cite: 2]</h1>
         <p class="subtitle reveal">Founder & President @ DSC | CS Student | Developer</p>
         <p class="text-secondary reveal" style="max-width: 750px; margin: 0 auto; color: var(--text-secondary);">
-            I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. I enjoy building efficient, user-friendly applications and solving real-world problems.
+            [cite_start]I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. [cite: 6]
         </p>
     </section>
 
@@ -180,12 +170,10 @@
             <div class="card">
                 <h3>Founder & President</h3>
                 <h4>Developer Student Club (DSC) - DYPTC Campus</h4>
-                <span class="date">Present</span>
                 <ul>
-                    <li>Established the club to foster a culture of technical innovation and collaborative learning among students.</li>
-                    <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the college level.</li>
-                    <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
-                    <li>Currently manage a dedicated team of student developers to build impactful campus solutions.</li>
+                    <li>Established the club to foster a culture of technical innovation among students.</li>
+                    <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit.</li>
+                    <li>Led development of the official DSC Institutional Platform using React and Spring Boot.</li>
                 </ul>
             </div>
         </div>
@@ -193,22 +181,8 @@
 
     <section id="education">
         <h2>Education</h2>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Bachelor of Computer Science</h3>
-                <h4>Dr. D. Y. Patil Technical Campus (Pune University)</h4>
-                <span class="date">Expected Graduation: 2027</span>
-                <p>CGPA: 7.68 / 10.0</p>
-            </div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Diploma in Computer Engineering</h3>
-                <h4>Sanjivani K.B.P. Polytechnic</h4>
-                <span class="date">Kopargaon, MH | Completed</span>
-                <p>Percentage: 80.51%</p>
-            </div>
-        </div>
+        [cite_start]<div class="card-wrapper"><div class="card"><h3>Bachelor of Computer Science</h3><h4>DYPTC (Pune University) [cite: 6][cite_start]</h4><p>CGPA: 7.68 / 10.0 [cite: 7]</p></div></div>
+        <div class="card-wrapper"><div class="card"><h3>Diploma in Computer Engineering</h3><h4>Sanjivani K.B.P. [cite_start]Polytechnic [cite: 8, 9][cite_start]</h4><p>Percentage: 80.51% [cite: 10]</p></div></div>
     </section>
 
     <section id="experience">
@@ -216,22 +190,22 @@
         <div class="card-wrapper">
             <div class="card">
                 <h3>Android Development Intern</h3>
-                <h4>Arnav Technosys</h4>
-                <span class="date">6 Weeks | Pune, MH</span>
+                [cite_start]<h4>Arnav Technosys [cite: 12]</h4>
+                [cite_start]<span class="date">Duration: 6 Weeks [cite: 19]</span>
                 <ul>
-                    <li>Developed Android applications using Java and XML, implementing responsive UI designs and core functionality.</li>
-                    <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and ensure code quality.</li>
+                    [cite_start]<li>Developed Android apps using Java and XML, implementing responsive UI designs. [cite: 20]</li>
+                    [cite_start]<li>Collaborated with senior developers to troubleshoot bugs and optimize performance. [cite: 21]</li>
                 </ul>
             </div>
         </div>
         <div class="card-wrapper">
             <div class="card">
                 <h3>Java Development Intern</h3>
-                <h4>Cognifyz Technologies</h4>
-                <span class="date">1 Month | Remote / On-site</span>
+                [cite_start]<h4>Cognifyz Technologies [cite: 23]</h4>
+                [cite_start]<span class="date">Duration: 1 Month [cite: 25]</span>
                 <ul>
-                    <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming principles.</li>
-                    <li>Assisted in the development of modular code structures and participated in code reviews.</li>
+                    [cite_start]<li>Worked on backend logic utilizing Core Java concepts. [cite: 26]</li>
+                    [cite_start]<li>Assisted in development of modular code structures. [cite: 27]</li>
                 </ul>
             </div>
         </div>
@@ -241,22 +215,21 @@
         <h2>Projects</h2>
         <div class="card-wrapper">
             <div class="card">
-                <h3>Real-Time Chat Dashboard (Ocean Glass Theme)</h3>
-                <h4>Java, Spring Boot, JS, MySQL</h4>
+                [cite_start]<h3>Real-Time Chat Dashboard [cite: 35]</h3>
+                [cite_start]<h4>Java, Spring Boot, JS, MySQL [cite: 35]</h4>
                 <ul>
-                    <li>Developed a responsive, real-time messaging application using Spring Boot for the backend and Vanilla JavaScript.</li>
-                    <li>Designed a modern "Ocean Glass" user interface with HTML5 and CSS3, featuring glassmorphism and animations.</li>
-                    <li>Implemented secure user authentication, global contact search, and friend management features.</li>
+                    [cite_start]<li>Built a responsive real-time messaging app with glassmorphism UI. [cite: 36, 37]</li>
+                    [cite_start]<li>Implemented secure auth and friend management. [cite: 38]</li>
                 </ul>
             </div>
         </div>
         <div class="card-wrapper">
             <div class="card">
-                <h3>Mentor Meeting System</h3>
-                <h4>Android Java, XML, PHP, Firebase</h4>
+                [cite_start]<h3>Mentor Meeting System [cite: 40]</h3>
+                [cite_start]<h4>Android Java, XML, PHP, Firebase [cite: 40]</h4>
                 <ul>
-                    <li>Engineered an Android application to streamline student tracking and mentorship management for the college.</li>
-                    <li>Utilized XML for UI design and Android Java for core logic, integrating a PHP backend.</li>
+                    [cite_start]<li>Engineered app for institutional mentorship management. [cite: 41]</li>
+                    [cite_start]<li>Implemented hierarchical role system for department-wise tracking. [cite: 43]</li>
                 </ul>
             </div>
         </div>
@@ -267,68 +240,33 @@
         <div class="card-wrapper">
             <div class="card">
                 <div class="skills-grid">
-                    <div class="skill-category">
-                        <h4>Languages</h4>
-                        <div class="skill-tags">
-                            <span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Advanced Java</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Web & Mobile</h4>
-                        <div class="skill-tags">
-                            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript (ES6+)</span><span class="tag">XML</span><span class="tag">Spring Boot</span><span class="tag">Android Studio</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Databases</h4>
-                        <div class="skill-tags">
-                            <span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag">SQLite</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Tools & OS</h4>
-                        <div class="skill-tags">
-                            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Postman</span><span class="tag">Linux (Ubuntu)</span>
-                        </div>
-                    </div>
+                    [cite_start]<div class="skill-category"><h4>Languages</h4><span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span> [cite: 30]</div>
+                    [cite_start]<div class="skill-category"><h4>Web & App</h4><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Spring Boot</span><span class="tag">Android Studio</span> [cite: 31, 33]</div>
+                    [cite_start]<div class="skill-category"><h4>DB & Tools</h4><span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag">Git</span><span class="tag">Postman</span> [cite: 32, 33]</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="certifications">
-        <h2>Certifications</h2>
-        <div class="card-wrapper">
-            <div class="card">
-                <ul>
-                    <li><strong>HTML, CSS, and Javascript for Web Developers</strong> - Johns Hopkins University (82.60%)</li>
-                    <li><strong>Core Java Course</strong> - Anudip Foundation (Grade: A+)</li>
-                    <li><strong>1st Rank, College Level Hackathon</strong> - C++ Programming Competition</li>
-                    <li><strong>Participant, Tech-Mantra 2k24</strong> - District Level Hackathon</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
     <footer id="contact">
-        <p>Email: abhinavspawar2005@gmail.com</p>
-        <p>Phone: +91-9359717085</p>
-        <div style="margin-top: 20px;">
-            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">LinkedIn</a>
-            <a href="#" style="color: var(--accent-color); text-decoration: none; margin: 0 10px;">GitHub</a>
-        </div>
-        <p style="margin-top: 20px; color: #475569; font-size: 0.8rem;">© 2026 Abhinav Sujit Pawar</p>
+        [cite_start]<p>Email: abhinavspawar2005@gmail.com [cite: 4]</p>
+        [cite_start]<p>© 2026 Abhinav Sujit Pawar [cite: 2]</p>
     </footer>
 
     <script>
-        // SPOTLIGHT LOGIC
+        const modal = document.getElementById('contact-modal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+        openBtn.onclick = () => modal.style.display = 'flex';
+        closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; }
+
         const spotlight = document.getElementById('spotlight');
         document.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // GSAP ENTRANCE
         gsap.registerPlugin(ScrollTrigger);
         gsap.from(".reveal", { opacity: 0, y: 30, stagger: 0.2, duration: 1 });
     </script>
