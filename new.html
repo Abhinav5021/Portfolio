@@ -6,6 +6,7 @@
     <title>Abhinav Sujit Pawar | Portfolio</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
         :root {
@@ -17,7 +18,7 @@
             --border-color: #334155;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: var(--bg-color); 
@@ -54,9 +55,9 @@
         .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: var(--accent-color); }
 
-        .download-btn { background: var(--accent-color); color: #050811 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; margin-left: 1.5rem; text-decoration: none; }
+        .download-btn { background: var(--accent-color); color: #050811 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; margin-left: 1.5rem; }
 
-        /* HERO - PERFECTLY CENTERED */
+        /* HERO */
         #home { 
             padding: 220px 2rem 120px; 
             text-align: center; 
@@ -82,20 +83,8 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 2rem 2.5rem;
-            border-radius: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* HIDDEN CONTENT LOGIC */
-        .card h3 { 
-            color: var(--accent-color); 
-            font-size: 1.6rem;
-            transition: transform 0.5s ease;
-        }
+        .card { background: var(--card-bg); padding: 2rem 2.5rem; border-radius: 20px; position: relative; z-index: 2; }
+        .card h3 { color: var(--accent-color); font-size: 1.6rem; transition: transform 0.5s ease; }
 
         .reveal-content {
             max-height: 0;
@@ -109,12 +98,22 @@
         /* HOVER ANIMATIONS */
         .card-wrapper:hover { transform: scale(1.02); }
         .card-wrapper:hover .reveal-content {
-            max-height: 1200px; 
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            margin-top: 20px;
+            max-height: 1200px; opacity: 1; transform: translateY(0); pointer-events: auto; margin-top: 20px;
         }
+
+        /* CONTACT FORM STYLES */
+        .contact-form {
+            display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;
+        }
+        .contact-form input, .contact-form textarea {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
+            padding: 12px; border-radius: 8px; color: white; outline: none; font-family: inherit;
+        }
+        .contact-form button {
+            background: var(--accent-color); color: #050811; border: none; padding: 12px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .contact-form button:hover { transform: scale(1.02); opacity: 0.9; }
 
         /* GLOWING BORDER */
         .card-wrapper::before {
@@ -123,19 +122,28 @@
             animation: rotateBorder 4s linear infinite; z-index: -1; opacity: 0; transition: opacity 0.3s;
         }
         .card-wrapper:hover::before { opacity: 1; }
-
         @keyframes rotateBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         ul { list-style: none; color: var(--text-secondary); }
         li { margin-bottom: 0.8rem; padding-left: 1.2rem; position: relative; }
         li::before { content: "•"; position: absolute; left: 0; color: var(--accent-color); }
 
-        /* SKILLS */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .skill-category h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;}
         .tag { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); color: var(--text-primary); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; margin: 3px; display: inline-block; }
 
         footer { padding: 60px 2rem; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
+
+        /* MOBILE FIXES */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .card-wrapper { transform: none !important; }
+            .reveal-content { 
+                max-height: 2000px; opacity: 1; transform: translateY(0); pointer-events: auto; margin-top: 20px;
+            }
+            .card-wrapper::before { opacity: 0.3; } /* subtle glow on mobile all the time */
+            .nav-links a:not(.download-btn) { display: none; } /* hide links on small screens to avoid clutter */
+            .spotlight { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -147,10 +155,8 @@
             <div class="logo">Abhinav Pawar</div>
             <div class="nav-links">
                 <a href="#leadership">Leadership</a>
-                <a href="#education">Education</a>
-                <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
+                <a href="#contact">Contact Me</a>
                 <a href="AbhinavCV.pdf" download class="download-btn">Download CV</a>
             </div>
         </nav>
@@ -160,7 +166,7 @@
         <h1>Abhinav Sujit Pawar</h1>
         <p class="subtitle">Founder & President @ DSC | CS Student | Developer</p>
         <p style="max-width: 750px; color: var(--text-secondary);">
-            Computer Science student at Dr. D. Y. Patil Technical Campus. Passionate about Android and Java development, leading campus technical initiatives.
+            Computer Science student at Dr. D. Y. Patil Technical Campus. Leading campus technical initiatives and specialized in Java development.
         </p>
     </section>
 
@@ -170,70 +176,10 @@
             <div class="card">
                 <h3>Founder & President @ DSC</h3>
                 <div class="reveal-content">
-                    <p style="color: var(--accent-color); margin-bottom: 10px;">Developer Student Club - DYPTC Pune</p>
                     <ul>
-                        <li>Established the club to foster a culture of technical innovation and collaborative learning among students.</li>
-                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the college level.</li>
-                        <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
-                        <li>Currently manage a dedicated team of student developers to build impactful campus solutions.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="education">
-        <h2>Education</h2>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Bachelor of Computer Science</h3>
-                <div class="reveal-content">
-                    <p>Dr. D. Y. Patil Technical Campus (Pune University)</p>
-                    <ul>
-                        <li><strong>CGPA: 7.68 / 10.0</strong></li>
-                        <li>Expected Graduation: 2027</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Diploma in Computer Engineering</h3>
-                <div class="reveal-content">
-                    <p>Sanjivani K.B.P. Polytechnic, Kopargaon</p>
-                    <ul>
-                        <li><strong>Percentage: 80.51%</strong></li>
-                        <li>Status: Completed</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience">
-        <h2>Experience</h2>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Android Development Intern</h3>
-                <div class="reveal-content">
-                    <p style="color: var(--accent-color);">Arnav Technosys | 6 Weeks | Pune, MH</p>
-                    <ul>
-                        <li>Developed Android applications using Java and XML, implementing responsive UI designs and core functionality.</li>
-                        <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and ensure code quality.</li>
-                        <li>Gained practical experience in the mobile development lifecycle and version control integration.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Java Development Intern</h3>
-                <div class="reveal-content">
-                    <p style="color: var(--accent-color);">Cognifyz Technologies | 1 Month</p>
-                    <ul>
-                        <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming principles.</li>
-                        <li>Assisted in the development of modular code structures and participated in code reviews.</li>
-                        <li>Enhanced problem-solving skills by addressing real-world software development challenges.</li>
+                        <li>Established the club to foster a culture of technical innovation.</li>
+                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit.</li>
+                        <li>Led development of official DSC Institutional Platform.</li>
                     </ul>
                 </div>
             </div>
@@ -246,84 +192,71 @@
             <div class="card">
                 <h3>Real-Time Chat Dashboard</h3>
                 <div class="reveal-content">
-                    <p style="margin-bottom: 10px;"><strong>Java, Spring Boot, JS, MySQL</strong></p>
+                    <p><strong>Java, Spring Boot, JS, MySQL</strong></p>
                     <ul>
-                        <li>Developed a responsive messaging application using Spring Boot for the backend and Vanilla JavaScript.</li>
-                        <li>Designed a modern "Ocean Glass" UI with HTML5/CSS3 featuring glassmorphism and animations.</li>
-                        <li>Implemented secure user authentication, global contact search, and friend management features.</li>
-                        <li>Built profile management tools allowing users to edit details and delete conversation history.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Mentor Meeting System</h3>
-                <div class="reveal-content">
-                    <p style="margin-bottom: 10px;"><strong>Android Java, XML, PHP, Firebase</strong></p>
-                    <ul>
-                        <li>Engineered an Android application to streamline student tracking and mentorship management for the college.</li>
-                        <li>Utilized XML for UI design and Android Java for core logic, integrating a PHP backend.</li>
-                        <li>Implemented a hierarchical role system (Admin/HOD/Principal) to track records department-wise.</li>
-                        <li>Enabled features for scheduling weekly meetings and tracking student progress using MySQL and SQLite.</li>
+                        <li>Developed responsive messaging application with "Ocean Glass" UI theme.</li>
+                        <li>Implemented secure user authentication and global contact search.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="skills">
-        <h2>Technical Skills</h2>
+    <section id="contact">
+        <h2>Contact Me</h2>
         <div class="card-wrapper">
             <div class="card">
-                <h3>View Tech Stack</h3>
+                <h3>Get In Touch</h3>
                 <div class="reveal-content">
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h4>Languages</h4>
-                            <span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Advanced Java</span>
-                        </div>
-                        <div class="skill-category">
-                            <h4>Web & Mobile</h4>
-                            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JS</span><span class="tag">Spring Boot</span><span class="tag">Android Studio</span>
-                        </div>
-                        <div class="skill-category">
-                            <h4>Tools</h4>
-                            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">VS Code</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="certifications">
-        <h2>Certifications</h2>
-        <div class="card-wrapper">
-            <div class="card">
-                <h3>Achievements & Ranks</h3>
-                <div class="reveal-content">
-                    <ul>
-                        <li><strong>Johns Hopkins University:</strong> Web Development (82.60%)</li>
-                        <li><strong>Anudip Foundation:</strong> Core Java Course (Grade: A+)</li>
-                        <li><strong>1st Rank:</strong> College Level C++ Programming Hackathon</li>
-                        <li><strong>Tech-Mantra 2k24:</strong> District Level Hackathon Participant</li>
-                    </ul>
+                    <form class="contact-form" id="contact-form">
+                        <input type="text" id="from_name" placeholder="Your Name" required>
+                        <input type="email" id="reply_to" placeholder="Your Email" required>
+                        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+                        <button type="submit">SEND MESSAGE</button>
+                    </form>
+                    <p id="form-status" style="margin-top: 10px; font-size: 0.9rem;"></p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>abhinavspawar2005@gmail.com | +91-9359717085</p>
-        <p>© 2026 Abhinav Sujit Pawar</p>
+        <p>abhinavspawar2005@gmail.com | © 2026 Abhinav Sujit Pawar</p>
     </footer>
 
     <script>
+        // Spotlight Logic
         const spotlight = document.getElementById('spotlight');
         document.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        // EmailJS Integration
+        (function() {
+            // Replace "YOUR_PUBLIC_KEY" with your real key from EmailJS dashboard
+            emailjs.init("YOUR_PUBLIC_KEY"); 
+        })();
+
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const status = document.getElementById('form-status');
+            status.innerText = "Sending...";
+
+            // Replace "YOUR_SERVICE_ID" and "YOUR_TEMPLATE_ID"
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: document.getElementById('from_name').value,
+                reply_to: document.getElementById('reply_to').value,
+                message: document.getElementById('message').value
+            }).then(() => {
+                status.style.color = "#38bdf8";
+                status.innerText = "Message Sent Successfully!";
+                this.reset();
+            }, (error) => {
+                status.style.color = "#ff4d4d";
+                status.innerText = "Failed to send. Please try again.";
+                console.log('FAILED...', error);
+            });
         });
     </script>
 </body>
