@@ -242,7 +242,6 @@
             event.preventDefault();
             const status = document.getElementById('form-status');
             status.innerText = "Sending...";
-
             // Replace "YOUR_SERVICE_ID" and "YOUR_TEMPLATE_ID"
             emailjs.send("service_1ie0bx7", "template_uhhbnxn", {
                 from_name: document.getElementById('from_name').value,
