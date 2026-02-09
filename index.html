@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abhinav Sujit Pawar | Portfolio</title>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
@@ -18,102 +19,453 @@
             --border-color: #334155;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-color); 
+        /* GLOBAL RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* SPOTLIGHT */
+        /* 1. DYNAMIC BACKGROUND LAYERS */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(56, 189, 248, 0.01) 50%);
+            background-size: 100% 4px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            filter: blur(120px);
+            opacity: 0.04;
+            z-index: -1;
+            animation: float 20s infinite alternate;
+        }
+
+        .orb-1 {
+            top: 10%;
+            left: -150px;
+        }
+
+        .orb-2 {
+            bottom: 10%;
+            right: -150px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(60px, 100px);
+            }
+        }
+
         .spotlight {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(450px circle at var(--x) var(--y), rgba(56, 189, 248, 0.12), transparent 80%);
-            z-index: -1; pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(450px circle at var(--x) var(--y), rgba(56, 189, 248, 0.1), transparent 80%);
+            z-index: -1;
+            pointer-events: none;
         }
 
+        /* 2. HEADER & NAVIGATION */
         header {
-            background-color: rgba(5, 8, 17, 0.9); backdrop-filter: blur(10px);
-            position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
+            background-color: rgba(5, 8, 17, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        nav { max-width: 1100px; margin: 0 auto; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent-color); }
-        .nav-links { display: flex; align-items: center; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
-        .nav-links a:hover { color: var(--accent-color); }
-        .download-btn { background: var(--accent-color); color: #050811 !important; padding: 8px 16px; border-radius: 8px; font-weight: 700; margin-left: 1.5rem; text-decoration: none; }
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* CONTACT MODAL */
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .download-btn {
+            background: var(--accent-color);
+            color: #050811 !important;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        /* 3. HERO & PROFILE PIC ZOOM */
+        #home {
+            padding: 200px 2rem 100px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-container {
+            width: 155px;
+            height: 155px;
+            margin-bottom: 2rem;
+            position: relative;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--accent-color), transparent);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--bg-color);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-container:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-container:hover .profile-pic {
+            transform: scale(1.15);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 4. THE GLOWING BORDER CARD SYSTEM */
+        section {
+            padding: 40px 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::after {
+            content: "";
+            height: 1px;
+            background: var(--border-color);
+            flex-grow: 1;
+        }
+
+        .card-wrapper {
+            position: relative;
+            padding: 2px; /* This is your border thickness */
+            border-radius: 22px;
+            margin-bottom: 2rem;
+            overflow: hidden; 
+            background: rgba(0, 0, 0, 0.2); /* Dark base */
+            z-index: 1;
+        }
+
+        /* THE SPINNING LASER ENGINE */
+        .card-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, var(--accent-color), transparent);
+            animation: rotateBorder 4s linear infinite;
+            z-index: 0; /* Behind the card content */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card-wrapper:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotateBorder {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card {
+            background-color: #050811; /* Matches your body-bg exactly to block the radar */
+            background-image: radial-gradient(circle at 2px 2px, rgba(56, 189, 248, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            position: relative;
+            z-index: 2; /* Sits ABOVE the laser */
+            width: 100%;
+            height: 100%;
+        }
+        /* DOWN ARROW */
+        .card::after {
+            content: '↓';
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            transition: 0.5s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .card-wrapper:hover .card::after {
+            transform: rotate(180deg);
+            animation: none;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* REVEAL CONTENT */
+        .reveal-content {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+        }
+
+        .card-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
+        }
+
+        .card-wrapper:hover .reveal-content {
+            max-height: 1500px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 20px;
+        }
+
+        /* 5. COMPONENTS */
+        .tag {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--text-primary);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin: 3px;
+            display: inline-block;
+        }
+
+        ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "›";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* 6. MODAL & FOOTER */
         #contact-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 8, 17, 0.9); z-index: 2000; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 17, 0.98);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
             backdrop-filter: blur(15px);
         }
+
         .modal-content {
-            background: var(--card-bg); padding: 2.5rem; border-radius: 24px;
-            width: 90%; max-width: 500px; border: 1px solid var(--border-color); position: relative;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
         }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
-        .contact-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-        .contact-form input, .contact-form textarea {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
-            padding: 12px; border-radius: 8px; color: white; outline: none; font-family: inherit;
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
+
+        .contact-form input,
+        .contact-form textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+        }
+
         .contact-form button {
-            background: var(--accent-color); color: #050811; border: none; padding: 12px;
-            border-radius: 8px; font-weight: 700; cursor: pointer;
+            background: var(--accent-color);
+            color: #050811;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
         }
 
-        /* HERO */
-        #home { padding: 220px 2rem 120px; text-align: center; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; font-weight: 900; }
-        .subtitle { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 1.5rem; }
-
-        section { padding: 40px 2rem; max-width: 1100px; margin: 0 auto; }
-        h2 { font-size: 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px; }
-        h2::after { content: ""; height: 1px; background: var(--border-color); flex-grow: 1; }
-
-        /* CARD REVEAL SYSTEM */
-        .card-wrapper {
-            position: relative; padding: 2px; border-radius: 22px; margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.03); overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        footer {
+            padding: 60px 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
-        .card { background: var(--card-bg); padding: 2rem 2.5rem; border-radius: 20px; position: relative; z-index: 2; }
-        .reveal-content { max-height: 0; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; overflow: hidden; }
-        .card-wrapper:hover { transform: scale(1.02); }
-        .card-wrapper:hover .reveal-content { max-height: 1500px; opacity: 1; transform: translateY(0); margin-top: 20px; }
 
-        .card-wrapper::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--accent-color));
-            animation: rotateBorder 4s linear infinite; z-index: -1; opacity: 0; transition: opacity 0.3s;
-        }
-        .card-wrapper:hover::before { opacity: 1; }
-        @keyframes rotateBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        ul { list-style: none; color: var(--text-secondary); }
-        li { margin-bottom: 0.8rem; padding-left: 1.2rem; position: relative; }
-        li::before { content: "•"; position: absolute; left: 0; color: var(--accent-color); }
-
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .skill-category h4 { color: var(--accent-color); margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .tag { background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); color: var(--text-primary); padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; margin: 3px; display: inline-block; }
-
-        footer { padding: 60px 2rem; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
-
+        /* 7. MOBILE FIXES */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .reveal-content { max-height: 2500px; opacity: 1; transform: translateY(0); margin-top: 20px; }
-            .spotlight { display: none; }
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            .spotlight,
+            .orb {
+                display: none;
+            }
+
+            .reveal-content {
+                max-height: 2000px;
+                opacity: 1;
+                transform: translateY(0);
+                margin-top: 20px;
+            }
+
+            .card-wrapper::before {
+                opacity: 0.4;
+            }
+
+            .card::after {
+                display: none;
+            }
         }
     </style>
 </head>
-<body>
 
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
     <div class="spotlight" id="spotlight"></div>
 
     <div id="contact-modal">
@@ -147,17 +499,28 @@
 
     <section id="home">
         <div class="profile-container">
-            <img src="profile1.jpg" alt="Abhinav Pawar" class="profile-pic" height="150px" width="150px" style="border-radius: 50%; border: 2px solid var(--accent-color); margin-bottom: 20px;">
+            <img src="profile1.jpg" alt="Abhinav Pawar" class="profile-pic" height="150px" width="150px"
+                style="border-radius: 50%; border: 2px solid var(--accent-color); margin-bottom: 20px;">
         </div>
-        
+
         <h1>Abhinav Sujit Pawar</h1>
         <p class="subtitle">Founder & President @ DSC | CS Student | Developer</p>
         <p style="max-width: 750px; color: var(--text-secondary);">
-            I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java development. I enjoy building efficient, user-friendly applications and leading campus technical initiatives.
+            I am a Computer Science student at Dr. D. Y. Patil Technical Campus, passionate about Android and Java
+            development. I enjoy building efficient, user-friendly applications and leading campus technical
+            initiatives.
         </p>
 
+        <div class="github-stats-container">
+            <img class="gh-card"
+                src="https://github-readme-stats.vercel.app/api?username=abhinav5021&show_icons=true&theme=tokyonight&hide_border=true&bg_color=111827&title_color=38bdf8&text_color=94a3b8&icon_color=38bdf8"
+                onerror="this.style.display='none'" alt="GitHub Stats" />
 
-        
+            <img class="gh-card"
+                src="https://github-readme-streak-stats.herokuapp.com/?user=abhinav5021&theme=tokyonight&hide_border=true&background=111827&ring=38bdf8&fire=38bdf8&currStreakLabel=38bdf8"
+                onerror="this.style.display='none'" alt="GitHub Streak" />
+        </div>
+
     </section>
 
     <section id="leadership">
@@ -168,10 +531,14 @@
                 <div class="reveal-content">
                     <p style="color: var(--accent-color); margin-bottom: 10px;">DYPTC Campus - Pune</p>
                     <ul>
-                        <li>Established the club to foster a culture of technical innovation and collaborative learning among students.</li>
-                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the college level.</li>
-                        <li>Led the end-to-end development of the official DSC Institutional Platform using React and Spring Boot.</li>
-                        <li>Currently manage a dedicated team of student developers to build impactful campus solutions.</li>
+                        <li>Established the club to foster a culture of technical innovation and collaborative learning
+                            among students.</li>
+                        <li>Organized and hosted the MIC–AICTE IndiaAI Impact Summit, enhancing AI awareness at the
+                            college level.</li>
+                        <li>Led the end-to-end development of the official DSC Institutional Platform using React and
+                            Spring Boot.</li>
+                        <li>Currently manage a dedicated team of student developers to build impactful campus solutions.
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -214,9 +581,12 @@
                 <div class="reveal-content">
                     <p style="color: var(--accent-color);">Arnav Technosys | Pune, MH | 6 Weeks</p>
                     <ul>
-                        <li>Developed Android applications using Java and XML, implementing responsive UI designs and core functionality.</li>
-                        <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and ensure code quality.</li>
-                        <li>Gained practical experience in the mobile development lifecycle and version control integration.</li>
+                        <li>Developed Android applications using Java and XML, implementing responsive UI designs and
+                            core functionality.</li>
+                        <li>Collaborated with senior developers to troubleshoot bugs, optimize app performance, and
+                            ensure code quality.</li>
+                        <li>Gained practical experience in the mobile development lifecycle and version control
+                            integration.</li>
                     </ul>
                 </div>
             </div>
@@ -227,12 +597,54 @@
                 <div class="reveal-content">
                     <p style="color: var(--accent-color);">Cognifyz Technologies | 1 Month</p>
                     <ul>
-                        <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming principles.</li>
-                        <li>Assisted in the development of modular code structures and participated in code reviews.</li>
-                        <li>Enhanced problem-solving skills by addressing real-world software development challenges.</li>
+                        <li>Worked on backend logic utilizing Core Java concepts and object-oriented programming
+                            principles.</li>
+                        <li>Assisted in the development of modular code structures and participated in code reviews.
+                        </li>
+                        <li>Enhanced problem-solving skills by addressing real-world software development challenges.
+                        </li>
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="coding-profiles">
+        <h2>Competitive Programming</h2>
+        <div class="skills-grid">
+
+            <div class="card-wrapper">
+                <div class="card">
+                    <h3>HackerRank Profile</h3>
+                    <div class="reveal-content">
+                        <p style="color: var(--accent-color); margin-bottom: 10px;">@abhinavspawar201</p>
+                        <ul>
+                            <li><strong>Gold Badge</strong> in Java & Problem Solving.</li>
+                            <li>Ranked among top performers in global algorithmic challenges.</li>
+                            <li>Certified in <strong>Java (Basic)</strong> and <strong>Problem Solving (Basic)</strong>.
+                            </li>
+                        </ul>
+                        <a href="https://www.hackerrank.com/profile/abhinavspawar201" target="_blank" class="tag"
+                            style="margin-top:15px; text-decoration:none; display:inline-block; border-color: var(--accent-color);">Verify
+                            Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-wrapper">
+                <div class="card">
+                    <h3>Technical Strengths</h3>
+                    <div class="reveal-content">
+                        <h4 style="color: var(--accent-color); font-size: 0.9rem; margin-bottom: 10px;">DSA Focus</h4>
+                        <ul>
+                            <li>Expertise in <strong>Data Structures & Algorithms</strong> using Java.</li>
+                            <li>Active participation in college and district-level coding marathons.</li>
+                            <li>Solved 200+ problems across various platforms (HackerRank/LeetCode).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -244,10 +656,14 @@
                 <div class="reveal-content">
                     <p style="margin-bottom: 10px;"><strong>Java, Spring Boot, JS, MySQL</strong></p>
                     <ul>
-                        <li>Developed a responsive, real-time messaging application using Spring Boot for the backend and Vanilla JavaScript.</li>
-                        <li>Designed a modern "Ocean Glass" user interface with HTML5 and CSS3, featuring glassmorphism and animations.</li>
-                        <li>Implemented secure user authentication, global contact search, and friend management features.</li>
-                        <li>Built profile management tools allowing users to edit details and delete conversation history.</li>
+                        <li>Developed a responsive, real-time messaging application using Spring Boot for the backend
+                            and Vanilla JavaScript.</li>
+                        <li>Designed a modern "Ocean Glass" user interface with HTML5 and CSS3, featuring glassmorphism
+                            and animations.</li>
+                        <li>Implemented secure user authentication, global contact search, and friend management
+                            features.</li>
+                        <li>Built profile management tools allowing users to edit details and delete conversation
+                            history.</li>
                     </ul>
                 </div>
             </div>
@@ -258,10 +674,13 @@
                 <div class="reveal-content">
                     <p style="margin-bottom: 10px;"><strong>Android Java, XML, PHP, Firebase</strong></p>
                     <ul>
-                        <li>Engineered an Android application to streamline student tracking and mentorship management for the college.</li>
+                        <li>Engineered an Android application to streamline student tracking and mentorship management
+                            for the college.</li>
                         <li>Utilized XML for UI design and Android Java for core logic, integrating a PHP backend.</li>
-                        <li>Implemented a hierarchical role system (Admin/HOD/Principal) to track records department-wise.</li>
-                        <li>Enabled features for scheduling weekly meetings and tracking student progress using MySQL and SQLite.</li>
+                        <li>Implemented a hierarchical role system (Admin/HOD/Principal) to track records
+                            department-wise.</li>
+                        <li>Enabled features for scheduling weekly meetings and tracking student progress using MySQL
+                            and SQLite.</li>
                     </ul>
                 </div>
             </div>
@@ -277,15 +696,20 @@
                     <div class="skills-grid">
                         <div class="skill-category">
                             <h4>Languages</h4>
-                            <span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Advanced Java</span>
+                            <span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span
+                                class="tag">Python</span><span class="tag">Advanced Java</span>
                         </div>
                         <div class="skill-category">
                             <h4>Web & Mobile</h4>
-                            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Spring Boot</span><span class="tag">Android Studio</span>
+                            <span class="tag">HTML5</span><span class="tag">CSS3</span><span
+                                class="tag">JavaScript</span><span class="tag">Spring Boot</span><span
+                                class="tag">Android Studio</span>
                         </div>
                         <div class="skill-category">
                             <h4>Tools & DB</h4>
-                            <span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">Linux</span>
+                            <span class="tag">MySQL</span><span class="tag">Firebase</span><span
+                                class="tag">Git</span><span class="tag">GitHub</span><span
+                                class="tag">Postman</span><span class="tag">Linux</span>
                         </div>
                     </div>
                 </div>
@@ -300,10 +724,12 @@
                 <h3>Ranks & Awards</h3>
                 <div class="reveal-content">
                     <ul>
-                        <li><strong>Johns Hopkins University:</strong> HTML, CSS, and Javascript for Web Developers (82.60%)</li>
+                        <li><strong>Johns Hopkins University:</strong> HTML, CSS, and Javascript for Web Developers
+                            (82.60%)</li>
                         <li><strong>Anudip Foundation:</strong> Core Java Course (Grade: A+)</li>
                         <li><strong>1st Rank:</strong> College Level C++ Programming Competition (Hackathon)</li>
-                        <li><strong>Tech-Mantra 2k24:</strong> District Level Hackathon Participant at Sanjivani Polytechnic</li>
+                        <li><strong>Tech-Mantra 2k24:</strong> District Level Hackathon Participant at Sanjivani
+                            Polytechnic</li>
                     </ul>
                 </div>
             </div>
@@ -315,43 +741,87 @@
         <p>© 2026 Abhinav Sujit Pawar</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <script>
-        // Modal Control
+        // --- EXISTING LOGIC: Modal & Spotlight ---
         const modal = document.getElementById('contact-modal');
         const openBtn = document.getElementById('openContactBtn');
         const closeBtn = document.getElementById('closeModalBtn');
+        const spotlight = document.getElementById('spotlight');
 
         openBtn.onclick = () => { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         closeBtn.onclick = () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-        window.onclick = (e) => { if (e.target == modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; } }
 
-        // Spotlight
-        const spotlight = document.getElementById('spotlight');
         document.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // EmailJS
-        (function() { emailjs.init("hyJcpEd_mQTDv2MSo"); })();
+        // --- EXISTING LOGIC: EmailJS ---
+        (function () { emailjs.init("hyJcpEd_mQTDv2MSo"); })();
 
-        document.getElementById('contact-form').addEventListener('submit', function(event) {
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
             event.preventDefault();
             const status = document.getElementById('form-status');
-            status.style.color = "white"; status.innerText = "Sending...";
-
+            status.innerText = "Sending...";
             emailjs.send("service_1ie0bx7", "template_uhhbnxn", {
                 from_name: document.getElementById('from_name').value,
                 reply_to: document.getElementById('reply_to').value,
                 message: document.getElementById('message').value
             }).then(() => {
-                status.style.color = "#38bdf8"; status.innerText = "Message Sent Successfully!";
+                status.style.color = "#38bdf8";
+                status.innerText = "Message Sent Successfully!";
                 setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }, 2000);
                 this.reset();
-            }, (error) => {
-                status.style.color = "#ff4d4d"; status.innerText = "Error. Please try again.";
             });
         });
+
+        // --- NEW LOGIC: Particle Background Engine ---
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.body.appendChild(canvas);
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0'; canvas.style.left = '0';
+        canvas.style.zIndex = '-3'; canvas.style.pointerEvents = 'none';
+
+        let particles = [];
+        const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.size = Math.random() * 1.5;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.2)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
+
 </html>
